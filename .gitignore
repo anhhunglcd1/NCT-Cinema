@@ -1,0 +1,35 @@
+# Bí mật và cấu hình máy cá nhân
+.env
+.env.*
+!.env.example
+
+# Build / thư viện
+**/target/
+**/node_modules/
+**/.next/
+**/out/
+**/build/
+**/dist/
+*.tsbuildinfo
+
+# Dữ liệu H2 local của backend
+backend/data/
+
+# IDE / hệ điều hành
+**/.idea/
+**/.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.sts4-cache/
+nbproject/private/
+.DS_Store
+Thumbs.db
+
+*.log
+
+# Cong cu portable (JDK, Node, cache Maven/npm) tai bang CAI_DAT.bat
+tools/
