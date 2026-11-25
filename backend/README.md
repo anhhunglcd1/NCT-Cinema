@@ -1,21 +1,22 @@
 # NCT Cinema Backend
 
-Spring Boot 4.1.2 / JPA / MySQL (hoặc H2 local).
+Spring Boot 4.1.2 / Spring Security / JPA / MySQL.
 
-## Chạy nhanh
+## Chạy trên máy
 
 ```powershell
 .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
 
-MySQL cần database `cinema_booking`:
+## Cấu hình (.env)
 
-```sql
-CREATE DATABASE cinema_booking CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
+- `DB_URL`, `DB_USER`, `DB_PASSWORD`: kết nối MySQL (khi không dùng profile `local`).
+- `NCT_ADMIN_EMAIL`, `NCT_ADMIN_PASSWORD`: bootstrap tài khoản quản trị lần đầu (mật khẩu tối thiểu 12 ký tự).
 
-Kiểm thử:
+## API tài khoản
 
-```powershell
-.\mvnw.cmd test
-```
+Tất cả request ghi dùng session cookie và CSRF (`GET /api/auth/csrf`):
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
