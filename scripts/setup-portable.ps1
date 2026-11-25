@@ -70,7 +70,36 @@ if ($Force -or -not (Test-Path (Join-Path $jdk 'bin\java.exe'))) {
   Write-Host "JDK da co: $jdk"
 }
 
+# ---- Node.js (tùy chọn) ----
+function Test-SystemNode {
+  $cmd = Get-Command node -ErrorAction SilentlyContinue
+  if (-not $cmd) { return $false }
+  $v = [version]((& node --version).TrimStart('v'))
+  # jsdom/vitest cần ^22.22 || ^24.15 || >=26
+  return ($v.Major -ge 26) -or ($v.Major -eq 24 -and $v.Minor -ge 15) -or ($v.Major -eq 22 -and $v.Minor -ge 22)
+}
+
+$nodeDir = Join-Path $tools 'node'
+if ($Node -or -not (Test-SystemNode)) {
+  if ($Force -or -not (Test-Path (Join-Path $nodeDir 'node.exe'))) {
+    Write-Host 'Node.js 24 LTS:'
+    $release = (Invoke-RestMethod -UseBasicParsing -Uri 'https://nodejs.org/dist/index.json') |
+      Where-Object { $_.version -like 'v24.*' } | Select-Object -First 1
+    $name = "node-$($release.version)-win-x64.zip"
+    $base = "https://nodejs.org/dist/$($release.version)"
+    $sums = (Invoke-WebRequest -UseBasicParsing -Uri "$base/SHASUMS256.txt").Content
+    $line = ($sums -split "`n") | Where-Object { $_ -match "\s$([regex]::Escape($name))$" } | Select-Object -First 1
+    if (-not $line) { throw "Khong tim thay checksum cho $name" }
+    $zip = Get-Verified "$base/$name" $name ($line -split '\s+')[0]
+    Install-Zip $zip $nodeDir
+    Write-Host "  OK: $nodeDir"
+  } else {
+    Write-Host "Node portable da co: $nodeDir"
+  }
+} else {
+  Write-Host "Dung Node da co tren may: $(& node --version) (them -Node neu muon ban portable)"
+}
 
 Remove-Item $tmp -Recurse -Force
 Write-Host ''
-Write-Host 'XONG. JDK nam trong thu muc tools\jdk.'
+Write-Host 'XONG. Cong cu nam trong thu muc tools\ (xoa thu muc nay la go sach).'
