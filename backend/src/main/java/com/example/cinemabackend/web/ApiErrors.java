@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 @RestControllerAdvice
 public class ApiErrors {
     @ExceptionHandler(ApiException.class)
@@ -18,4 +19,7 @@ public class ApiErrors {
     ResponseEntity<?> unreadable(Exception e) { return ResponseEntity.badRequest().body(Map.of("message", "Dữ liệu gửi lên không hợp lệ.")); }
     @ExceptionHandler(DataIntegrityViolationException.class)
     ResponseEntity<?> duplicate(Exception e) { return ResponseEntity.status(409).body(Map.of("message", "Dữ liệu bị trùng hoặc đang được sử dụng. Vui lòng tải lại và thử lại.")); }
+    @ExceptionHandler(AuthenticationException.class)
+    ResponseEntity<?> auth(Exception e) { return ResponseEntity.status(401).body(Map.of("message", "Email hoặc mật khẩu không đúng.")); }
 }
+
