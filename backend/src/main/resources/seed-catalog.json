@@ -1,0 +1,128 @@
+{
+  "movies": [
+    {
+      "id": "dune-two",
+      "title": "Dune: Hành Tinh Cát – Phần Hai",
+      "poster": "/posters/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+      "status": "nowPlaying",
+      "genres": [
+        "Khoa học viễn tưởng",
+        "Phiêu lưu"
+      ],
+      "duration": 166,
+      "rating": "T16",
+      "synopsis": "Paul Atreides cùng Chani và người Fremen bước vào hành trình định đoạt tương lai Arrakis.",
+      "trailerUrl": "https://www.youtube-nocookie.com/embed/Way9Dexny3w"
+    },
+    {
+      "id": "interstellar",
+      "title": "Hố Đen Tử Thần",
+      "poster": "/posters/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+      "status": "nowPlaying",
+      "genres": [
+        "Khoa học viễn tưởng",
+        "Chính kịch"
+      ],
+      "duration": 169,
+      "rating": "T13",
+      "synopsis": "Một nhóm phi hành gia vượt qua giới hạn của không gian để tìm một mái nhà mới cho nhân loại.",
+      "trailerUrl": "https://www.youtube-nocookie.com/embed/zSWdZVtXT7E"
+    },
+    {
+      "id": "your-name",
+      "title": "Your Name. – Tên Cậu Là Gì?",
+      "poster": "/posters/q719jXXEzOoYaps6babgKnONONX.jpg",
+      "status": "nowPlaying",
+      "genres": [
+        "Hoạt hình",
+        "Lãng mạn"
+      ],
+      "duration": 106,
+      "rating": "P",
+      "synopsis": "Hai người trẻ xa lạ bất ngờ kết nối qua những giấc mơ và cùng tìm kiếm nhau giữa Tokyo rộng lớn.",
+      "trailerUrl": "https://www.youtube-nocookie.com/embed/xU47nhruN-Q"
+    },
+    {
+      "id": "spirited-away",
+      "title": "Vùng Đất Linh Hồn",
+      "poster": "/posters/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
+      "status": "nowPlaying",
+      "genres": [
+        "Hoạt hình",
+        "Phiêu lưu"
+      ],
+      "duration": 125,
+      "rating": "P",
+      "synopsis": "Chihiro bước vào một thế giới kỳ lạ, nơi cô phải tìm lòng dũng cảm để giải cứu cha mẹ và trở về nhà.",
+      "trailerUrl": "https://www.youtube-nocookie.com/embed/ByXuk9QqQkk"
+    },
+    {
+      "id": "inception",
+      "title": "Kẻ Đánh Cắp Giấc Mơ",
+      "poster": "/posters/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+      "status": "comingSoon",
+      "genres": [
+        "Hành động",
+        "Khoa học viễn tưởng"
+      ],
+      "duration": 148,
+      "rating": "T13",
+      "synopsis": "Một chuyên gia xâm nhập giấc mơ nhận nhiệm vụ khó nhất: gieo một ý tưởng vào tâm trí người khác.",
+      "trailerUrl": "https://www.youtube-nocookie.com/embed/YoHD9XEInc0"
+    },
+    {
+      "id": "avatar-water",
+      "title": "Avatar: Dòng Chảy Của Nước",
+      "poster": "/posters/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+      "status": "comingSoon",
+      "genres": [
+        "Phiêu lưu",
+        "Khoa học viễn tưởng"
+      ],
+      "duration": 192,
+      "rating": "T13",
+      "synopsis": "Gia đình Sully tìm thấy một mái nhà mới giữa những cộng đồng sống bên đại dương Pandora.",
+      "trailerUrl": "https://www.youtube-nocookie.com/embed/d9MyW72ELq0"
+    }
+  ],
+  "cinemas": [
+    {
+      "id": "nct-center",
+      "name": "NCT Cinema Trung Tâm",
+      "address": "123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh"
+    },
+    {
+      "id": "nct-west",
+      "name": "NCT Cinema Gò Vấp",
+      "address": "88 Quang Trung, Gò Vấp, TP. Hồ Chí Minh"
+    },
+    {
+      "id": "nct-hanoi",
+      "name": "NCT Cinema Cầu Giấy",
+      "address": "52 Trần Thái Tông, Cầu Giấy, Hà Nội"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-nct-center",
+      "cinemaId": "nct-center",
+      "name": "Phòng 1",
+      "rows": 8,
+      "seatsPerRow": 10
+    },
+    {
+      "id": "room-nct-west",
+      "cinemaId": "nct-west",
+      "name": "Phòng 2",
+      "rows": 8,
+      "seatsPerRow": 10
+    },
+    {
+      "id": "room-nct-hanoi",
+      "cinemaId": "nct-hanoi",
+      "name": "Phòng 3",
+      "rows": 8,
+      "seatsPerRow": 10
+    }
+  ]
+}
