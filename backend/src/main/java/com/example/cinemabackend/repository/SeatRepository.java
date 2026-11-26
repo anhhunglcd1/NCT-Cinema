@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SeatRepository extends JpaRepository<Seat, String> {
     java.util.List<Seat> findByRoomIdOrderByLabel(String roomId);
+    java.util.Optional<Seat> findByRoomIdAndLabel(String roomId, String label);
 }
