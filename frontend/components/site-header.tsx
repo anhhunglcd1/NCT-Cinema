@@ -20,7 +20,10 @@ import { useLogout, useMe } from "@/features/auth-payment/auth";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { ThemeToggle } from "./theme-toggle";
 
-const NAV = [{ href: "/", label: "Trang chủ" }] as const;
+const NAV = [
+  { href: "/", label: "Trang chủ" },
+  { href: "/movies", label: "Phim" },
+] as const;
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
