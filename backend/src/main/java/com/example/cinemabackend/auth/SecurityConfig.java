@@ -40,7 +40,7 @@ public class SecurityConfig {
             .securityContext(c -> c.securityContextRepository(contexts))
             .sessionManagement(s -> s.sessionAuthenticationStrategy(strategy))
             .authorizeHttpRequests(a -> a
-                .requestMatchers(HttpMethod.GET, "/api/auth/csrf").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/auth/csrf", "/api/health", "/api/catalog", "/api/movies", "/api/movies/**", "/api/showtimes", "/api/showtimes/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
                 .anyRequest().authenticated())
             .requestCache(c -> c.disable())
