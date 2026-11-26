@@ -49,11 +49,49 @@ export interface Showtime {
   price: number;
 }
 
+export type TicketStatus = "pending" | "confirmed" | "cancelled" | "expired";
+export type PaymentStatus =
+  | "pending"
+  | "paid"
+  | "failed"
+  | "expired"
+  | "cancelled"
+  | "refunded"
+  | "requires_review";
+export type PaymentProvider = "vnpay" | "mock" | (string & {});
+
+export interface Ticket {
+  id: string;
+  movieId: string;
+  showtimeId: string;
+  cinemaId: string;
+  roomId: string;
+  seats: string[];
+  status: TicketStatus;
+  total: number;
+  bookedAt: string;
+  expiresAt: string;
+  paymentStatus: PaymentStatus;
+  paymentProvider: PaymentProvider;
+}
+
 export interface Catalog {
   movies: Movie[];
   cinemas: Cinema[];
   rooms: Room[];
   showtimes: Showtime[];
+}
+
+export type SeatStatus = "available" | "occupied" | "blocked";
+
+export interface SeatAvailability {
+  label: string;
+  status: SeatStatus;
+}
+
+export interface Availability {
+  showtimeId: string;
+  seats: SeatAvailability[];
 }
 
 export interface CsrfToken {
@@ -70,4 +108,10 @@ export interface RegisterInput {
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface BookingInput {
+  showtimeId: string;
+  seats: string[];
+  idempotencyKey: string;
 }

@@ -1,4 +1,4 @@
-import type { Showtime } from "./api/types";
+import type { Showtime, TicketStatus } from "./api/types";
 
 /** Giờ suất chiếu và báo cáo đều tính theo giờ Việt Nam (Asia/Ho_Chi_Minh, UTC+7, không đổi giờ). */
 const VN_TIME_ZONE = "Asia/Ho_Chi_Minh";
@@ -82,6 +82,21 @@ export function formatDuration(minutes: number): string {
   if (h === 0) return `${m} phút`;
   return m === 0 ? `${h} giờ` : `${h} giờ ${m} phút`;
 }
+
+/** mm:ss còn lại, không âm. */
+export function formatCountdown(msLeft: number): string {
+  const total = Math.max(0, Math.ceil(msLeft / 1000));
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+export const TICKET_STATUS_LABEL: Record<TicketStatus, string> = {
+  pending: "Đang giữ chỗ",
+  confirmed: "Đã xác nhận",
+  cancelled: "Đã hủy",
+  expired: "Hết hạn",
+};
 
 export const RATING_LABEL: Record<string, string> = {
   P: "P – Mọi lứa tuổi",

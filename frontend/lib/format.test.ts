@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDays, formatDuration, formatVnd, isUpcoming, showtimeStart, todayInVietnam } from "./format";
+import { addDays, formatCountdown, formatDuration, formatVnd, isUpcoming, showtimeStart, todayInVietnam } from "./format";
 
 describe("giờ Việt Nam", () => {
   it("showtimeStart hiểu ngày/giờ là giờ VN (UTC+7)", () => {
@@ -32,5 +32,11 @@ describe("định dạng", () => {
     expect(formatDuration(45)).toBe("45 phút");
     expect(formatDuration(120)).toBe("2 giờ");
     expect(formatDuration(166)).toBe("2 giờ 46 phút");
+  });
+
+  it("đếm ngược không âm", () => {
+    expect(formatCountdown(299_001)).toBe("05:00");
+    expect(formatCountdown(61_000)).toBe("01:01");
+    expect(formatCountdown(-5)).toBe("00:00");
   });
 });

@@ -15,5 +15,11 @@ public final class Views {
     public record ShowtimeView(String id, String movieId, String cinemaId, String roomId, LocalDate date, String time, long price) {
         public ShowtimeView(Showtime s) { this(s.id,s.movie.id,s.room.cinema.id,s.room.id,s.date,s.time.toString(),s.price); }
     }
+    public record TicketView(String id, String movieId, String showtimeId, String cinemaId, String roomId, List<String> seats,
+        String status, long total, Instant bookedAt, Instant expiresAt, String paymentStatus, String paymentProvider) {
+        public TicketView(Ticket t, Payment p) { this(t.id,t.showtime.movie.id,t.showtime.id,t.showtime.room.cinema.id,t.showtime.room.id,List.copyOf(t.seats),t.status,t.total,t.bookedAt,t.expiresAt,p.status,p.provider); }
+    }
     public record Catalog(List<MovieView> movies, List<CinemaView> cinemas, List<RoomView> rooms, List<ShowtimeView> showtimes) {}
+    public record SeatView(String label, String status) {}
+    public record Availability(String showtimeId, List<SeatView> seats) {}
 }

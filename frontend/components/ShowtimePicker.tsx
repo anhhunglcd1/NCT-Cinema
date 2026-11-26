@@ -1,13 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { formatDay, formatVnd, showtimeStart } from "@/lib/format";
 import type { Cinema, Room, Showtime } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
 /**
- * Hiển thị lịch chiếu theo ngày -> rạp -> giờ chiếu (chưa nối sang trang chọn ghế).
+ * Chọn ngày -> rạp -> giờ chiếu. `now` do server truyền xuống để render nhất quán giữa server/client.
+ * Chỉ hiện suất chưa bắt đầu (backend cũng từ chối đặt vé suất đã chiếu).
  */
 export function ShowtimePicker({
   showtimes,
@@ -74,12 +77,14 @@ export function ShowtimePicker({
               </div>
               <div className="flex flex-wrap gap-2">
                 {byCinema.get(cinema.id)!.map((s) => (
-                  <div key={s.id} className="inline-flex flex-col items-center rounded-md border px-4 py-1.5 text-sm">
-                    <span className="text-base font-semibold">{s.time}</span>
-                    <span className="text-[11px] font-normal text-muted-foreground">
-                      {roomName.get(s.roomId)} · {formatVnd(s.price)}
-                    </span>
-                  </div>
+                  <Button key={s.id} asChild variant="outline" className="h-auto flex-col gap-0 px-4 py-1.5">
+                    <Link href={`/booking/${s.id}`}>
+                      <span className="text-base font-semibold">{s.time}</span>
+                      <span className="text-[11px] font-normal text-muted-foreground">
+                        {roomName.get(s.roomId)} · {formatVnd(s.price)}
+                      </span>
+                    </Link>
+                  </Button>
                 ))}
               </div>
             </div>
