@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Clapperboard, LogOut, Menu, UserRound } from "lucide-react";
+import { Clapperboard, LogOut, Menu, Shield, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,7 +72,7 @@ export function SiteHeader() {
               <SheetTitle>NCT Cinema</SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col gap-1 px-4">
-              {NAV.map((item) => (
+              {[...NAV, ...(user?.role === "ADMIN" ? [{ href: "/admin/movies", label: "Quản trị" }] : [])].map((item) => (
                 <SheetClose asChild key={item.href}>
                   <Link
                     href={item.href}
@@ -107,6 +107,17 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          {user?.role === "ADMIN" && (
+            <Link
+              href="/admin/movies"
+              className={cn(
+                "rounded-md px-3 py-1.5 text-sm transition-colors hover:text-foreground",
+                isActive(pathname, "/admin") ? "text-foreground" : "text-muted-foreground",
+              )}
+            >
+              Quản trị
+            </Link>
+          )}
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
@@ -123,6 +134,14 @@ export function SiteHeader() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel className="truncate font-normal text-muted-foreground">{user.email}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {user.role === "ADMIN" && (
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin/movies">
+                      <Shield /> Trang quản trị
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={onLogout} disabled={logout.isPending}>
                   <LogOut /> Đăng xuất
