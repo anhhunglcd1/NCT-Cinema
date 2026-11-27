@@ -42,6 +42,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(a -> a
                 .requestMatchers(HttpMethod.GET, "/api/auth/csrf", "/api/health", "/api/catalog", "/api/movies", "/api/movies/**", "/api/showtimes", "/api/showtimes/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
             .requestCache(c -> c.disable())
             .formLogin(c -> c.disable()).httpBasic(c -> c.disable())
