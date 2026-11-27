@@ -115,3 +115,26 @@ export interface BookingInput {
   seats: string[];
   idempotencyKey: string;
 }
+
+export interface MovieInput {
+  title: string;
+  poster: string;
+  status: MovieStatus;
+  genres: string[];
+  duration: number;
+  rating: AgeRating;
+  synopsis: string;
+  trailerUrl: string;
+}
+
+export interface CinemaInput {
+  name: string;
+  address: string;
+}
+
+export interface RoomInput {
+  cinemaId: string;
+  name: string;
+  rows: number;
+  seatsPerRow: number;
+}
