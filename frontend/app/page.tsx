@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { ArrowRight, Film } from "lucide-react";
+import { ArrowRight, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MovieGrid } from "@/components/MovieCard";
 import { BACKEND_DOWN_HINT, ErrorState, MovieGridSkeleton } from "@/components/states";
@@ -14,15 +14,18 @@ export default function HomePage() {
       <section className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/25 via-background to-background px-6 py-12 sm:px-10">
         <div className="max-w-xl space-y-4">
           <p className="text-sm font-medium text-primary">NCT Cinema</p>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Khám phá phim và lịch chiếu tại NCT Cinema.</h1>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Chọn phim, chọn ghế, giữ chỗ trong vài phút.</h1>
           <p className="text-muted-foreground">
-            Xem danh sách phim đang chiếu, sắp chiếu và tra cứu giờ chiếu theo rạp.
+            Xem lịch chiếu tại các rạp NCT, giữ ghế trong 5 phút và theo dõi vé đã đặt.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild size="lg">
               <Link href="/movies">
-                <Film /> Xem phim ngay
+                <Ticket /> Đặt vé ngay
               </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/my-tickets">Vé của tôi</Link>
             </Button>
           </div>
         </div>
