@@ -14,12 +14,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { ErrorState } from "@/components/states";
 import { HoldCountdown } from "@/components/HoldCountdown";
 import { SeatMap } from "@/features/booking/components/seat-map";
-import { useReserve, useSeats } from "@/features/booking/api";
+import { useMyTickets, useReserve, useSeats } from "@/features/booking/api";
 import { indexCatalog, useCatalog } from "@/features/catalog/api";
 import { useMe } from "@/features/auth-payment/auth";
 import { useNow } from "@/hooks/use-now";
 import { ApiError, errorMessage } from "@/lib/api/http";
-import type { Ticket } from "@/lib/api/types";
 import {
   IdempotencyKeys,
   MAX_SEATS_PER_BOOKING,
@@ -34,9 +33,9 @@ export function BookingFlow({ showtimeId }: { showtimeId: string }) {
   const catalog = useCatalog();
   const seats = useSeats(showtimeId);
   const me = useMe();
+  const myTickets = useMyTickets(!!me.data);
   const reserve = useReserve();
   const [selected, setSelected] = useState<string[]>([]);
-  const [reserved, setReserved] = useState<Ticket | null>(null);
   const [keys] = useState(() => new IdempotencyKeys());
   const now = useNow();
 
@@ -47,6 +46,10 @@ export function BookingFlow({ showtimeId }: { showtimeId: string }) {
   const cinema = showtime && index.cinema(showtime.cinemaId);
   const room = showtime && index.room(showtime.roomId);
   const lost = unavailableSelected(selected, statuses);
+
+  const activeHold = myTickets.data?.find(
+    (t) => t.showtimeId === showtimeId && t.status === "pending" && new Date(t.expiresAt).getTime() > now,
+  );
 
   if (catalog.isPending || seats.isPending) return <BookingSkeleton />;
   if (seats.error instanceof ApiError && seats.error.status === 404) {
@@ -76,9 +79,8 @@ export function BookingFlow({ showtimeId }: { showtimeId: string }) {
     const input = { showtimeId, seats: selected, idempotencyKey: keys.keyFor(showtimeId, selected) };
     reserve.mutate(input, {
       onSuccess: (ticket) => {
-        setReserved(ticket);
-        setSelected([]);
         toast.success(`Đã giữ ghế ${ticket.seats.join(", ")} trong 5 phút.`);
+        router.push(`/my-tickets/${ticket.id}`);
       },
       onError: (error) => {
         if (error instanceof ApiError && error.status === 409) {
@@ -101,13 +103,15 @@ export function BookingFlow({ showtimeId }: { showtimeId: string }) {
         </Link>
       </Button>
 
-      {reserved && (
+      {activeHold && (
         <Alert>
           <TicketIcon />
-          <AlertTitle>Đã giữ ghế {reserved.seats.join(", ")} · Mã vé {reserved.id}</AlertTitle>
+          <AlertTitle>Bạn đang giữ ghế {activeHold.seats.join(", ")} cho suất này</AlertTitle>
           <AlertDescription className="flex flex-wrap items-center gap-3">
-            <HoldCountdown expiresAt={reserved.expiresAt} />
-            <span>Trang thanh toán đang được tích hợp ở lượt sau.</span>
+            <HoldCountdown expiresAt={activeHold.expiresAt} />
+            <Button asChild size="sm">
+              <Link href={`/my-tickets/${activeHold.id}`}>Xem chi tiết vé</Link>
+            </Button>
           </AlertDescription>
         </Alert>
       )}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Clapperboard, LogOut, Menu, Shield, UserRound } from "lucide-react";
+import { Clapperboard, LogOut, Menu, Shield, Ticket, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +23,7 @@ import { ThemeToggle } from "./theme-toggle";
 const NAV = [
   { href: "/", label: "Trang chủ" },
   { href: "/movies", label: "Phim" },
+  { href: "/my-tickets", label: "Vé của tôi" },
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -135,6 +136,11 @@ export function SiteHeader() {
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel className="truncate font-normal text-muted-foreground">{user.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/my-tickets">
+                    <Ticket /> Vé của tôi
+                  </Link>
+                </DropdownMenuItem>
                 {user.role === "ADMIN" && (
                   <DropdownMenuItem asChild>
                     <Link href="/admin/movies">
