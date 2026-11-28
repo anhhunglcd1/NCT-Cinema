@@ -97,4 +97,7 @@ public class BookingService {
         t.status="cancelled"; reservations.release(t.id); p.status="paid".equals(p.status) ? "refunded" : "cancelled";
         return view(t);
     }
+    public void expireHolds() {
+        tickets.expiredRoomIds(Instant.now()).stream().sorted().forEach(id -> { lockRoom(id); expireRoom(id); });
+    }
 }

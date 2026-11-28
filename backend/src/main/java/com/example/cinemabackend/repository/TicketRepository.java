@@ -4,6 +4,8 @@ import com.example.cinemabackend.domain.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TicketRepository extends JpaRepository<Ticket, String> {
+    @org.springframework.data.jpa.repository.Query("select distinct t.showtime.room.id from Ticket t where t.status = 'pending' and t.expiresAt <= :now")
+    java.util.List<String> expiredRoomIds(@org.springframework.data.repository.query.Param("now") java.time.Instant now);
     @org.springframework.data.jpa.repository.Query("select t.showtime.room.id from Ticket t where t.id = :id")
     java.util.Optional<String> roomIdFor(@org.springframework.data.repository.query.Param("id") String id);
     java.util.List<Ticket> findByOwnerIdOrderByBookedAtDesc(String ownerId);
@@ -14,3 +16,4 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
     boolean existsByShowtimeRoomId(String roomId);
     boolean existsByShowtimeMovieId(String movieId);
 }
+

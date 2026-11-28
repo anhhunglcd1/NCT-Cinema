@@ -20,6 +20,7 @@ public final class Views {
         public TicketView(Ticket t, Payment p) { this(t.id,t.showtime.movie.id,t.showtime.id,t.showtime.room.cinema.id,t.showtime.room.id,List.copyOf(t.seats),t.status,t.total,t.bookedAt,t.expiresAt,p.status,p.provider); }
     }
     public record Catalog(List<MovieView> movies, List<CinemaView> cinemas, List<RoomView> rooms, List<ShowtimeView> showtimes) {}
+    public record AdminCatalog(List<MovieView> movies, List<CinemaView> cinemas, List<RoomView> rooms, List<ShowtimeView> showtimes, List<TicketView> tickets) {}
     public record SeatView(String label, String status) {}
     public record Availability(String showtimeId, List<SeatView> seats) {}
 }

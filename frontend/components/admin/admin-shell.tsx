@@ -3,13 +3,14 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, Film } from "lucide-react";
+import { Building2, Film, Ticket } from "lucide-react";
 import { RequireLogin } from "@/components/RequireLogin";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/admin/movies", label: "Phim", icon: Film },
   { href: "/admin/cinemas", label: "Rạp & phòng", icon: Building2 },
+  { href: "/admin/tickets", label: "Vé", icon: Ticket },
 ] as const;
 
 export function AdminShell({ children }: { children: ReactNode }) {
