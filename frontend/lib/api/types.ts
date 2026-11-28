@@ -82,6 +82,10 @@ export interface Catalog {
   showtimes: Showtime[];
 }
 
+export interface AdminCatalog extends Catalog {
+  tickets: Ticket[];
+}
+
 export type SeatStatus = "available" | "occupied" | "blocked";
 
 export interface SeatAvailability {
