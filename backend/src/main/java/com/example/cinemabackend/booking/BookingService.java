@@ -83,4 +83,18 @@ public class BookingService {
         if (!t.owner.id.equals(owner.id) && !"ADMIN".equals(owner.role)) throw ApiException.notFound("vé");
         return t;
     }
+    public List<TicketView> list(Authentication auth,boolean admin) {
+        UserAccount owner=user(auth);
+        var found=admin ? tickets.findAllByOrderByBookedAtDesc() : tickets.findByOwnerIdOrderByBookedAtDesc(owner.id);
+        found.stream().filter(t -> "pending".equals(t.status)).map(t->t.showtime.room.id).distinct().sorted().forEach(id -> { lockRoom(id); expireRoom(id); });
+        return found.stream().map(this::view).toList();
+    }
+    public TicketView get(Authentication auth,String id) { return view(requireOwner(auth,id)); }
+    public TicketView cancel(Authentication auth,String id) {
+        Ticket t=requireOwner(auth,id); Payment p=payment(t);
+        if ("cancelled".equals(t.status) || "expired".equals(t.status)) return view(t);
+        if (!CatalogService.start(t.showtime).isAfter(Instant.now())) throw ApiException.conflict("Suất chiếu đã bắt đầu, không thể hủy vé.");
+        t.status="cancelled"; reservations.release(t.id); p.status="paid".equals(p.status) ? "refunded" : "cancelled";
+        return view(t);
+    }
 }
