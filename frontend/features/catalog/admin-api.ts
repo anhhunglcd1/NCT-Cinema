@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api/http";
 import type {
-  Catalog,
+  AdminCatalog,
   Cinema,
   CinemaInput,
   Movie,
@@ -18,7 +18,7 @@ const adminCatalogKey = ["admin", "catalog"] as const;
 export function useAdminCatalog() {
   return useQuery({
     queryKey: adminCatalogKey,
-    queryFn: () => api<Catalog>("/api/admin/catalog"),
+    queryFn: () => api<AdminCatalog>("/api/admin/catalog"),
   });
 }
 
